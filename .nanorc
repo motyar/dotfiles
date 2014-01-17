@@ -1,0 +1,176 @@
+set smooth
+set autoindent
+set tabsize 10
+set tabstospaces
+set mouse
+set nowrap
+##set softwrap
+set nohelp
+set morespace
+set smarthome
+set tempfile
+set quickblank
+set multibuffer
+
+## Nanorc files
+include "/usr/share/nano/nanorc.nanorc"
+ 
+## C/C++
+include "/usr/share/nano/c.nanorc"
+ 
+## HTML
+include "/usr/share/nano/html.nanorc"
+ 
+## TeX
+include "/usr/share/nano/tex.nanorc"
+ 
+## Quoted emails (under e.g. mutt)
+include "/usr/share/nano/mutt.nanorc"
+ 
+## Patch files
+include "/usr/share/nano/patch.nanorc"
+ 
+## Manpages
+include "/usr/share/nano/man.nanorc"
+ 
+## Groff
+include "/usr/share/nano/groff.nanorc"
+ 
+## Perl
+include "/usr/share/nano/perl.nanorc"
+ 
+## Python
+include "/usr/share/nano/python.nanorc"
+ 
+## Ruby
+include "/usr/share/nano/ruby.nanorc"
+ 
+## Java
+include "/usr/share/nano/java.nanorc"
+ 
+## Assembler
+include "/usr/share/nano/asm.nanorc"
+ 
+## Bourne shell scripts
+include "/usr/share/nano/sh.nanorc"
+ 
+## POV-Ray
+include "/usr/share/nano/pov.nanorc"
+
+## PHP
+## Here is an example for PHP
+##
+syntax "php" "\.php[2345s~]?$"
+
+## php markings
+color brightgreen "(<\?(php)?|\?>)"
+
+## functions
+color white "\<[a-z_]*\("
+
+## types
+color green "\<(var|float|global|double|bool|char|int|enum|const)\>"
+
+## structure
+color brightyellow "\<(class|new|private|public|function|for|foreach|if|while|do|else|elseif|case|default|switch)\>"
+
+## control flow
+color magenta "\<(goto|continue|break|return)\>"
+
+## strings
+color brightyellow "<[^=       ]*>" ""(\.|[^"])*""
+
+## comments
+color brightblue "//.*"
+color brightblue start="/\*" end="\*/"
+#color blue start="<" end=">"
+#color red "&[^;[[:space:]]]*;"
+
+## Trailing whitespace
+color ,green "[[:space:]]+$"
+               
+### all *js files  ( e.g. Firefox user.js, prefs.js )
+
+## Old version
+
+#syntax "jsfiles" "(\.|/|)js$"
+#color green "//.*$" start="\/\*" end="\*\/"
+#color blue "'(\\.|[^'])*'"
+#color red ""(\\.|[^\"])*""
+#color brightgreen "\<(true)\>"
+#color brightred "\<(false)\>" "http\:\/\/.*$"
+#color brightmagenta "[0-9](\\.|[^\"])*)"
+
+## New updated taken from http://wiki.linuxhelp.net/index.php/Nano_Syntax_Highlighting
+
+syntax "JavaScript" "\.(js)$"
+## Default
+color white "^.+$"
+## Decimal, cotal and hexadecimal numbers
+color yellow "\<[-+]?([1-9][0-9]*|0[0-7]*|0x[0-9a-fA-F]+)([uU][lL]?|[lL][uU]?)?\>"
+## Floating point number with at least one digit before decimal point
+color yellow "\<[-+]?([0-9]+\.[0-9]*|[0-9]*\.[0-9]+)([EePp][+-]?[0-9]+)?[fFlL]?"
+color yellow "\<[-+]?([0-9]+[EePp][+-]?[0-9]+)[fFlL]?"
+## Keywords
+color green "\<(break|case|catch|continue|default|delete|do|else|finally)\>"
+color green "\<(for|function|if|in|instanceof|new|null|return|switch)\>"
+color green "\<(switch|this|throw|try|typeof|undefined|var|void|while|with)\>"
+## Type specifiers
+color red "\<(Array|Boolean|Date|Enumerator|Error|Function|Math)\>"
+color red "\<(Number|Object|RegExp|String)\>"
+color red "\<(true|false)\>"
+## String
+color brightyellow "L?\"(\\"|[^"])*\""
+color brightyellow "L?'(\'|[^'])*'"
+## Escapes
+color red "\\[0-7][0-7]?[0-7]?|\\x[0-9a-fA-F]+|\\[bfnrt'"\?\\]"
+## Comments
+color magenta start="/\*" end="\*/"
+color magenta "//.*$"
+
+syntax "default"
+color green "^#.*" 
+color brightgreen "^##.*"
+color yellow "^###.*"
+#color green "^[ \t]*#.*
+
+### Key Bindings
+
+## cut/copy/paste
+bind ^X cut main
+bind ^C copytext main
+bind ^V uncut main
+
+## suspend
+set suspend
+bind ^A suspend all
+## Show total word counting
+bind ^W  wordcount all
+
+##Goto a line
+bind ^G gotoline all
+
+## undo/redo (still experimental/buggy on nano 2.2.x)
+set undo
+bind ^Z undo all
+bind ^Y redo all
+
+## Find/replace (shift+F3 still missing)
+bind ^F whereis main
+bind ^H replace main
+##bind ^G searchagain main
+##bind F3 searchagain main
+
+## save/quit/help (requires to ignore XON/XOFF keys)
+unset preserve
+bind ^S writeout all
+bind ^Q exit all
+bind F1 help all
+
+## tessssssssssXXXXXXXXXXXXXssss
+
+## Other keybindings
+# Emacs-like mark (shift+arrow won't work)
+bind ^Space mark main
+bind M-Space mark main
+

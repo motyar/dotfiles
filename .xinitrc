@@ -1,0 +1,1 @@
+xrdb -load ~/.solarize

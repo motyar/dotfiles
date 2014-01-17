@@ -1,0 +1,28 @@
+#!/bin/bash
+BACKUP_DIR=$HOME/dotfiles.bak
+
+SCRIPTPATH="`( cd \"$MY_PATH\" && pwd )`"
+
+if [[ "$EUID" == "0" ]]; then
+    echo "$SCRIPTPATH Creating softlink for dotfiles"
+    ln -s $SCRIPTPATH $HOME/dotfiles 
+fi
+
+FILES=$(ls -a $HOME/dotfiles/.???*)
+
+if [ ! -d "$BACKUP_DIR" ]; then
+  # Create doesn't exist.
+  echo "Creating $BACKUP_DIR for backup of existing dotfiles"
+  mkdir $BACKUP_DIR
+fi
+
+#loop for all files
+for f in $FILES
+do
+  echo "Moving existing dotfiles to $BACKUP_DIR"
+  mv $HOME/$(basename $f) $BACKUP_DIR -f 2>/dev/null
+  echo "Creating symbolink for $f"
+
+  ln -s $f $HOME/$(basename $f)
+  #ln -s $f $ROOT/$(basename $f)
+done
