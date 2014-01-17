@@ -1,32 +1,29 @@
-dotfiles
-========
+dotfiles Installation
+====================
+
+mkdit $HOME/dotfiles
+
+cd $HOME/dotfiles
+
+git clone git://github.com/motyar/dotfiles.git
+
+chmod +x install
+./install
+
+sudo su
+./install #Settings will be applied to root
+
 
 My ~/.Dotfiles
 
+## Solarized colorscheme for Xresources
+xrdb -load ~/.solarize && xterm -fullscreen
 
-#
-
-Solarized colorscheme for Xresources
-====================================
-To choose between light/dark bakground:
-
-  xrdb -DSOLARIZED_LIGHT -merge ~/.Xresources
-  
-  xrdb -DSOLARIZED_DARK -merge ~/.Xresources
-
-When using Xdefaults
-============================
-ln -s .Xdefaults .Xresources
-
-Loading the Keyboard settings
-=============================
+## Loading the Keyboard settings
 Use xev to see keycode.
 
 Edit .Xmodmap
-
 Run xmodmap ~/.Xmodmap
 
-
-Load .bashrc
-================
+## Load .bashrc
 source .bashrc
