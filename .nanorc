@@ -1,9 +1,9 @@
 set smooth
-set autoindent
-set tabsize 10
-set tabstospaces
+##set autoindent
+set tabsize 4
+##set tabstospaces
 set mouse
-set nowrap
+##set nowrap
 ##set softwrap
 set nohelp
 set morespace
@@ -11,6 +11,10 @@ set smarthome
 set tempfile
 set quickblank
 set multibuffer
+##set wordbounds
+set boldtext
+unset historylog
+##set whitespace "»·"
 
 ## Nanorc files
 include "/usr/share/nano/nanorc.nanorc"
@@ -173,4 +177,3 @@ bind F1 help all
 # Emacs-like mark (shift+arrow won't work)
 bind ^Space mark main
 bind M-Space mark main
-
