@@ -2,14 +2,20 @@ dotfiles Installation
 ====================
 
 cd $HOME
+
 git clone git://github.com/motyar/dotfiles.git
 
 chmod +x install
+
 ./install
 
+
 If you need same dotfiles for root user, run
+
 sudo su
+
 ./install
+
 
 ## Solarized colorscheme for Xresources
 xrdb -load ~/.solarize && xterm -fullscreen
