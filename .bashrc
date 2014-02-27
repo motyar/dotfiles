@@ -107,3 +107,12 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 fi
 
 export TERM="xterm-256color"
+export PATH=${PATH}:~/SD/adt-bundle-linux-x86-20131030/sdk/tools
+export PATH=${PATH}:~/SD/adt-bundle-linux-x86-20131030/sdk/platform-tools
+export ANDROID_SDK_HOME=~/android-sdk-linux_x86/tools
+export PATH=$PATH:$ANDROID_SDK_HOME
+
+export JAVA_HOME=/usr/lib/jvm/java-6-sun-1.6.0.26
+export PATH=$PATH:$JAVA_HOME
+
+#bindkey -v

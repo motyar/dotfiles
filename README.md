@@ -5,6 +5,8 @@ cd $HOME
 
 git clone git://github.com/motyar/dotfiles.git
 
+cd dotfiles
+
 chmod +x install
 
 ./install

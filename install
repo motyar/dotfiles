@@ -8,7 +8,7 @@ if [[ "$EUID" == "0" ]]; then
     ln -s $SCRIPTPATH $HOME/dotfiles 
 fi
 
-FILES=$(ls -a $HOME/dotfiles/.???*)
+FILES=$(find $HOME/dotfiles -maxdepth 1 -type f -name '.*')
 
 if [ ! -d "$BACKUP_DIR" ]; then
   # Create doesn't exist.
