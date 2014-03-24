@@ -15,7 +15,7 @@ set ttimeout " do timeout on terminal key codes
 set timeoutlen=10 " timeout after 100 msec
 set cmdheight=1
 set showmatch
-set pastetoggle=<Insert>
+"set pastetoggle=<Insert>
 set lazyredraw 
 set scrolloff=15
 set showcmd 
@@ -32,7 +32,7 @@ set wildmode=list:longest,full
 set showmatch
 set matchtime=0
 
-set shortmess=atI   " Abbreviate messages
+"set shortmess=atI   " Abbreviate messages
 
 set nobackup
 set noswapfile
@@ -156,6 +156,7 @@ if version >= 700
   au InsertLeave * silent hi CursorLine  term=none cterm=none ctermbg=234
   au InsertEnter * silent hi CursorColumn term=none cterm=none ctermbg=none
   au InsertLeave * silent hi CursorColumn term=none cterm=none ctermbg=234
+  "au InsertChange * silent hi CursorLine term=none cterm=none ctermbg=236
 endif
 
 " if we want to try autocompletion
@@ -284,5 +285,20 @@ function! LoadSessions()
 endfunction
 "}}}
 
+" Dirty hack to pasteToggel on Insert key and Cur line highlight to show pastemode
+function! InsertStatuslineColor(mode)
+      if a:mode == 'i'
+        if &paste
+           hi CursorLine term=none cterm=none ctermbg=232
+           set nopaste
+        else
+           hi CursorLine term=none cterm=none ctermbg=240
+          set paste
+        endif
+      elseif a:mode == 'r'
+        call feedkeys("\<Insert>", "n")
+      else
+      endif
+endfunction
 
-"au FileType netrw au InsertEnter VimEnter()
+au InsertChange * call InsertStatuslineColor(v:insertmode)
