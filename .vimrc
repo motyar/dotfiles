@@ -285,4 +285,4 @@ endfunction
 "}}}
 
 
-au FileType netrw au InsertEnter VimEnter()
+"au FileType netrw au InsertEnter VimEnter()
