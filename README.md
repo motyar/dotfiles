@@ -18,6 +18,14 @@ sudo su
 
 ./install
 
+## Forceful push
+
+git remote set-url origin git@github.com:motyar/dotfiles.git
+
+chmod +x push
+
+./push
+
 
 ## Solarized colorscheme for Xresources
 xrdb -load ~/.solarize && xterm -fullscreen
