@@ -84,8 +84,6 @@ xnoremap <bs> c
 " Save on  key jj 
 imap jj <ESC>
 
-"A Good replace mode
-map r R
 
 map <right> <nop>
 map <left> <nop>
@@ -96,8 +94,6 @@ imap ( ()<left>
 imap [ []<left>
 imap < <><left>
 imap { {<cr><cr>}<up><tab>
-
-
 
 "Improve up/down movement on wrapped lines 
 nnoremap j gj
@@ -133,12 +129,8 @@ nnoremap ff:OpenURL <cfile><CR>
 nnoremap gs :OpenURL http://www.google.com/search?q=<cword><CR>
 nnoremap gh :OpenURL http://www.google.com/search?q=
 
-
 "Please open gmail for me
 nnoremap gm :OpenURL https://mail.google.com/mail/h/<CR>
-
-
-"Automatically set paste mode in Vim when pasting in insert mode https://coderwall.com/p/if9mda
 
 " Hide that ~ for blank line
 hi NonText ctermfg=black guifg=black
@@ -147,16 +139,12 @@ hi Folded term=none cterm=none ctermbg=234
 hi MatchParen term=none cterm=none ctermfg=234
 hi CursorColumn term=none cterm=none ctermbg=234
 
-"hi Cursor ctermfg=236 ctermbg=222
-"hi Normal ctermfg=none ctermbg=none
-
 " now set it up to change the status line based on mode
 if version >= 700
   au InsertEnter * silent hi CursorLine term=none cterm=none ctermbg=232
   au InsertLeave * silent hi CursorLine  term=none cterm=none ctermbg=234
   au InsertEnter * silent hi CursorColumn term=none cterm=none ctermbg=none
   au InsertLeave * silent hi CursorColumn term=none cterm=none ctermbg=234
-  "au InsertChange * silent hi CursorLine term=none cterm=none ctermbg=236
 endif
 
 " if we want to try autocompletion
@@ -192,9 +180,6 @@ let g:netrw_liststyle=3
 
 " Change directory to the current buffer when opening files.
 set autochdir
-
-
-
 
 " change the mapleader from \ to ,
 let mapleader=","
@@ -302,3 +287,14 @@ function! InsertStatuslineColor(mode)
 endfunction
 
 au InsertChange * call InsertStatuslineColor(v:insertmode)
+
+" Return to last edit position when opening files (You want this!) http://amix.dk/vim/vimrc.html
+autocmd BufReadPost *
+     \ if line("'\"") > 0 && line("'\"") <= line("$") |
+     \   exe "normal! g`\"" |
+     \ endif
+
+" allow the . to execute once for each line of a visual selection
+vnoremap . :normal .<CR>
+" allow the . to execute once for next line
+map . .j
