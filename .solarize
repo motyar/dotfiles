@@ -50,6 +50,13 @@ XTerm*cursorColor:           S_base1
 XTerm*pointerColorBackground:S_base01
 XTerm*pointerColorForeground:S_base1
 
+
+!! XTerm*cursorColor:           S_base03
+XTerm*cursorColor:           #FFFFFF
+XTerm*pointerColorBackground:S_base03
+XTerm*pointerColorForeground:S_base03
+
+
 !! black dark/light
 XTerm*color0:                S_base02
 XTerm*color8:                S_base03
