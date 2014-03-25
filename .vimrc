@@ -311,11 +311,7 @@ vnoremap . :normal .<CR>
 " allow the . to execute once for next line
 map . .j
 
-
-
-
-
-"" Auto run ssh connection
+"" Auto run ssh connection TODO
 
 "let shellcmd = 'ssh '.g:netrw_machine.' -f -N -o ControlMaster=auto -o ControlPath=/tmp/%r@%h:%p'
 "let s:syntax =  'sh .vs'. g:netrw_machine 
