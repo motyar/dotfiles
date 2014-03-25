@@ -270,23 +270,34 @@ function! LoadSessions()
 endfunction
 "}}}
 
+
+
 " Dirty hack to pasteToggel on Insert key and Cur line highlight to show pastemode
+"{{{
 function! InsertStatuslineColor(mode)
       if a:mode == 'i'
         if &paste
            hi CursorLine term=none cterm=none ctermbg=232
            set nopaste
         else
-           hi CursorLine term=none cterm=none ctermbg=240
+           hi CursorLine term=none cterm=none ctermbg=black
           set paste
         endif
       elseif a:mode == 'r'
-        call feedkeys("\<Insert>", "n")
+        call feedkeys("\<Insert>", "n") "Never an replace mode
       else
+          echo a:mode
       endif
 endfunction
-
+"This will toggel on <Inserr>
 au InsertChange * call InsertStatuslineColor(v:insertmode)
+"Enter in nopaste
+au InsertEnter * set nopaste
+"}}}
+
+
+
+
 
 " Return to last edit position when opening files (You want this!) http://amix.dk/vim/vimrc.html
 autocmd BufReadPost *
@@ -298,3 +309,13 @@ autocmd BufReadPost *
 vnoremap . :normal .<CR>
 " allow the . to execute once for next line
 map . .j
+
+
+
+
+
+" Auto run ssh connection
+
+"let shellcmd = 'ssh '.g:netrw_machine.' -f -N -o ControlMaster=auto -o ControlPath=/tmp/%r@%h:%p'
+"let s:syntax =  'sh .vs'. g:netrw_machine 
+"au FileType php au VimEnter * !exec s:syntax
