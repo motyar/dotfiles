@@ -1,4 +1,4 @@
-set shortmess+=I "Startup message is irritating
+set shortmess+=atI "Startup message is irritating
 set nocompatible
 set noeb
 set novb        " turn off visual bell
@@ -7,7 +7,10 @@ set vb t_vb=    " turn off error beep/flash
 set noruler
 set autoindent
 set smartindent
-set shiftwidth=4
+set tabstop=4 " size of a hard tabstop
+set shiftwidth=4 " size of an "indent"
+" make "tab" insert indents instead of tabs at the beginning of a line
+set smarttab
 set expandtab
 set scrolloff=9999
 set notimeout " don't timeout on mappings
@@ -31,8 +34,6 @@ set wildmode=list:longest,full
 
 set showmatch
 set matchtime=0
-
-"set shortmess=atI   " Abbreviate messages
 
 set nobackup
 set noswapfile
@@ -314,8 +315,8 @@ map . .j
 
 
 
-" Auto run ssh connection
+"" Auto run ssh connection
 
 "let shellcmd = 'ssh '.g:netrw_machine.' -f -N -o ControlMaster=auto -o ControlPath=/tmp/%r@%h:%p'
 "let s:syntax =  'sh .vs'. g:netrw_machine 
-"au FileType php au VimEnter * !exec s:syntax
+""au FileType php au VimEnter * !exec s:syntax
