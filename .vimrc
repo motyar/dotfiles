@@ -28,9 +28,9 @@ set timeoutlen=10 " timeout after 100 msec
 set cmdheight=1
 set showmatch
 "set pastetoggle=<Insert>
-set lazyredraw 
+set lazyredraw
 set scrolloff=17
-"set showcmd 
+"set showcmd
 set noshowmode
 " folding settings
 set foldmethod=indent   "fold based on indent
@@ -39,7 +39,7 @@ set foldenable        "dont fold by default
 set foldlevel=99         "this is just what i use
 " Command line completion
 set wildmenu
-set wildmode=list:longest,full  
+set wildmode=list:longest,full
 
 set showmatch
 set matchtime=0
@@ -49,7 +49,7 @@ set noswapfile
 
 set virtualedit=block "Move freely in visual mode
 "Please never show status line
-"set laststatus=0
+set laststatus=0
 "set guitablabel=%N/\ %t\ %M
 
 
@@ -59,8 +59,8 @@ set title
 
 set ttyfast         " smoother changes
 
-set cursorcolumn "to enable highlighting the cursor column 
-set cul                                           
+set cursorcolumn "to enable highlighting the cursor column
+set cul
 
 " Search options
 set hlsearch
@@ -70,7 +70,7 @@ set smartcase
 
 " Make backspace delete lots of things
 set backspace=indent,eol,start
-  
+
 " No need to show mode
 "set noshowmode
 
@@ -95,7 +95,7 @@ xnoremap . :normal.<cr>
 " Backspace: Delete selected and go into insert mode
 xnoremap <bs> c
 
-" Save on  key jj 
+" Save on  key jj
 imap jj <ESC>
 
 
@@ -114,11 +114,11 @@ imap < <><left>
 imap { {<cr><cr>}<up><tab>
 
 
-"Improve up/down movement on wrapped lines 
+"Improve up/down movement on wrapped lines
 nnoremap j gj
 nnoremap k gk
 
-"Keep search pattern at the center of the screen. 
+"Keep search pattern at the center of the screen.
 nnoremap <silent> n nzz
 nnoremap <silent> N Nzz
 nnoremap <silent> * *zz
@@ -150,6 +150,20 @@ nnoremap gh :OpenURL http://www.google.com/search?q=
 
 "Please open gmail for me
 nnoremap gm :OpenURL https://mail.google.com/mail/h/<CR>
+
+"Split style
+hi vertsplit term=none cterm=none ctermbg=none ctermfg=black
+set fillchars+=vert:\│
+
+set wmw=0
+nmap <c-h> <c-w>h<c-w><Bar>
+nmap <c-l> <c-w>l<c-w><Bar>
+
+
+"map <C-j> <C-W>j
+"map <C-k> <C-W>k
+"map <C-h> <C-W>h
+"map <C-l> <C-W>l
 
 "tabline styling
 hi TabLine      term=none cterm=none ctermbg=232 ctermfg=gray gui=reverse
@@ -199,18 +213,17 @@ nnoremap <C-T> :tabe<Space>
 
 " Toggle Vexplore with Ctrl-E
 function! ToggleVExplorer()
-     Texplore
-     let t:expl_buf_num = bufnr("%")
+    "Texplore
+    :tabfirst
+    let t:expl_buf_num = bufnr("%")
 endfunction
 map <silent> <C-E> :call ToggleVExplorer()<CR>
 
 let g:netrw_fastbrowse=2
 let g:netrw_liststyle = 3
-let g:netrw_browse_split = 3
-"let g:netrw_altv = 1
-"let g:netrw_winsize = 20
 let g:netrw_banner = 0
-"let g:netrw_list_hide = &wildignore
+let g:netrw_list_hide = &wildignore
+
 " Change directory to the current buffer when opening files.
 set autochdir
 
@@ -252,42 +265,42 @@ if &term =~ '^xterm'
 endif
 
 "{{{ ---Session Persistance--- From http://www.andrew.cmu.edu/user/chaokul/vimrc
-au VimLeave * call VimLeave() 
-au VimEnter * call VimEnter() 
+"au VimLeave * call VimLeave()
+"au VimEnter * call VimEnter()
 
-let g:PathToSessions = $HOME . "" 
+let g:PathToSessions = $HOME . ""
 
-" {{{ function! VimEnter() 
-function! VimEnter() 
-   if argc() == 0 
-      " gvim started with no files 
-"      if has("browse") == 1 
-"         let g:SessionFileName = browse(0, "Select Session", g:PathToSessions, "/LastSession.vim") 
-"         if g:SessionFileName != "" 
-"            execute "source " . g:SessionFileName 
-"         endif 
-"      else 
-         " For non-gui vim 
-         let LoadLastSession = confirm("Restore last session?", "&Yes\n&No") 
-         if LoadLastSession == 1 
-            execute "source " . g:PathToSessions . "/LastSession.vim" 
+" {{{ function! VimEnter()
+function! VimEnter()
+   if argc() == 0
+      " gvim started with no files
+"      if has("browse") == 1
+"         let g:SessionFileName = browse(0, "Select Session", g:PathToSessions, "/LastSession.vim")
+"         if g:SessionFileName != ""
+"            execute "source " . g:SessionFileName
+"         endif
+"      else
+         " For non-gui vim
+         let LoadLastSession = confirm("Restore last session?", "&Yes\n&No")
+         if LoadLastSession == 1
+            execute "source " . g:PathToSessions . "/LastSession.vim"
          else
              call LoadSessions()
-         endif 
-"      endif 
-   endif 
-endfunction 
+         endif
+"      endif
+   endif
+endfunction
 "//}}}
 
-"{{{ function! VimLeave() 
-function! VimLeave() 
-   execute "mksession! " . g:PathToSessions . "/LastSession.vim" 
-   if exists("g:SessionFileName") == 1 
-      if g:SessionFileName != "" 
-         execute "mksession! " . g:SessionFileName 
-      endif 
-   endif 
-endfunction 
+"{{{ function! VimLeave()
+function! VimLeave()
+   execute "mksession! " . g:PathToSessions . "/LastSession.vim"
+   if exists("g:SessionFileName") == 1
+      if g:SessionFileName != ""
+         execute "mksession! " . g:SessionFileName
+      endif
+   endif
+endfunction
 "}}}
 
 "{{{ function! LoadSessions()
@@ -304,7 +317,7 @@ function! LoadSessions()
     let result = result . "\n" . "Please enter a session name to load (or empty to start normally):"
     let sessionname = input(result)
     if sessionname != ""
-        let g:SessionFileName = g:PathToSessions . "/" . sessionname . ".vim" 
+        let g:SessionFileName = g:PathToSessions . "/" . sessionname . ".vim"
         execute "source " . g:SessionFileName
     endif
 endfunction
@@ -336,6 +349,20 @@ au InsertEnter * set nopaste
 "}}}
 
 
+"{{{ Start and stop ssh tunnel, Fast remote editing via http://www.erikzaadi.com/2013/03/07/fast-remote-editing-with-vim/
+function! StartSshTunnel(machine)
+    let shellcmd = "ssh ".a:machine." -f -N -o ControlMaster=auto -o ControlPath=/tmp/%r@%h:%p"
+    let tunnel=system(shellcmd)
+endfunction
+
+function! StopSshTunnel()
+   let kill = system("lsof -i -n | grep ssh | awk '{print $2}' | xargs kill -9")
+endfunction
+
+au FileType netrw au VimEnter * call StartSshTunnel(g:netrw_machine)
+au FileType netrw au VimLeave * call StopSshTunnel()
+"}}}
+
 
 
 
@@ -353,8 +380,9 @@ map . .j
 "" Auto run ssh connection TODO
 
 "let shellcmd = 'ssh '.g:netrw_machine.' -f -N -o ControlMaster=auto -o ControlPath=/tmp/%r@%h:%p'
-"let s:syntax =  'sh .vs'. g:netrw_machine 
+"let s:syntax =  'sh .vs'. g:netrw_machine
 ""au FileType php au VimEnter * !exec s:syntax
+
 
 nnoremap <silent> j jzz:set showtabline=0<cr>
 nnoremap <silent> k kzz:set showtabline=0<cr>
@@ -374,10 +402,6 @@ endif
 
 ""au FileType * au vimEnter * :let curdate=system('ssh motyar.info -f -N -o ControlMaster=auto -o ControlPath=/tmp/%r@%h:%p & echo $$')
 
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
 
 
 if version >= 700
@@ -386,3 +410,5 @@ if version >= 700
     "set tab labels to show at most 12 characters
     set guitablabel=%-0.12t%M
 endif
+
+"Auto remove trailing spaces
