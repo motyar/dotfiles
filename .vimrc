@@ -4,6 +4,15 @@ set noeb
 set novb        " turn off visual bell
 set noerrorbells visualbell t_vb=
 set vb t_vb=    " turn off error beep/flash
+" Add the g flag to search/replace by default
+set gdefault
+" Use UTF-8 without BOM
+set encoding=utf-8 nobomb
+" Use the OS clipboard by default (on versions compiled with `+clipboard`)
+set clipboard=unnamed
+" Don’t add empty newlines at the end of files
+set binary
+set noeol
 set noruler
 set autoindent
 set smartindent
@@ -20,8 +29,8 @@ set cmdheight=1
 set showmatch
 "set pastetoggle=<Insert>
 set lazyredraw 
-set scrolloff=15
-set showcmd 
+set scrolloff=17
+"set showcmd 
 set noshowmode
 " folding settings
 set foldmethod=indent   "fold based on indent
@@ -39,6 +48,10 @@ set nobackup
 set noswapfile
 
 set virtualedit=block "Move freely in visual mode
+"Please never show status line
+"set laststatus=0
+"set guitablabel=%N/\ %t\ %M
+
 
 
 " Set xterm title
@@ -64,7 +77,7 @@ set backspace=indent,eol,start
 " Save on 1 in normal mode
 map <silent> 1 :set cmdheight=5<ESC>:w<CR>:set cmdheight=1<CR>
 " qq Quite please
-map qq :q<CR>
+map qq :q<CR>:set showtabline=1<cr>
 
 " When I hit enter, I want new line and Insert mode
 map <CR> o
@@ -91,10 +104,15 @@ map <left> <nop>
 map <up> <nop>
 map <down> <nop>
 
+
+
 imap ( ()<left>
+imap () ()<left>
 imap [ []<left>
+imap [] []<left>
 imap < <><left>
 imap { {<cr><cr>}<up><tab>
+
 
 "Improve up/down movement on wrapped lines 
 nnoremap j gj
@@ -133,6 +151,12 @@ nnoremap gh :OpenURL http://www.google.com/search?q=
 "Please open gmail for me
 nnoremap gm :OpenURL https://mail.google.com/mail/h/<CR>
 
+"tabline styling
+hi TabLine      term=none cterm=none ctermbg=232 ctermfg=gray gui=reverse
+hi TabLineFill  term=none cterm=none ctermbg=232 gui=reverse
+hi TabLineSel   term=none cterm=none ctermbg=none ctermfg=white gui=bold
+hi Title        guifg=none guibg=none gui=bold
+
 " Hide that ~ for blank line
 hi NonText ctermfg=black guifg=black
 hi CursorLine term=none cterm=none ctermbg=234
@@ -142,10 +166,10 @@ hi CursorColumn term=none cterm=none ctermbg=234
 
 " now set it up to change the status line based on mode
 if version >= 700
-  au InsertEnter * silent hi CursorLine term=none cterm=none ctermbg=232
-  au InsertLeave * silent hi CursorLine  term=none cterm=none ctermbg=234
-  au InsertEnter * silent hi CursorColumn term=none cterm=none ctermbg=none
-  au InsertLeave * silent hi CursorColumn term=none cterm=none ctermbg=234
+    au InsertEnter * silent hi CursorLine term=none cterm=none ctermbg=232
+    au InsertLeave * silent hi CursorLine  term=none cterm=none ctermbg=234
+    au InsertEnter * silent hi CursorColumn term=none cterm=none ctermbg=none
+    au InsertLeave * silent hi CursorColumn term=none cterm=none ctermbg=234
 endif
 
 " if we want to try autocompletion
@@ -166,9 +190,12 @@ inoremap <tab> <c-r>=InsertTabWrapper()<cr>
 " nnoremap <Space> :
 map <Space> za
 
-" Move tabes with alt and arrow keys
-map <silent><A-Right> :tabnext<CR>
-map <silent><A-Left> :tabprevious<CR>
+"FireFox like tab shortcuts
+nnoremap <silent><A-Right> :set showtabline=1<cr>:tabnext<cr>
+"nnoremap <silent><A> :set showtabline=0
+nnoremap <silent><A-Left>  :set showtabline=1<cr>:tabprevious<CR>
+"nnoremap <C-W> :tabc<CR>
+nnoremap <C-T> :tabe<Space>
 
 " Toggle Vexplore with Ctrl-E
 function! ToggleVExplorer()
@@ -177,14 +204,26 @@ function! ToggleVExplorer()
 endfunction
 map <silent> <C-E> :call ToggleVExplorer()<CR>
 
-let g:netrw_liststyle=3
-
+let g:netrw_fastbrowse=2
+let g:netrw_liststyle = 3
+let g:netrw_browse_split = 3
+"let g:netrw_altv = 1
+"let g:netrw_winsize = 20
+let g:netrw_banner = 0
+"let g:netrw_list_hide = &wildignore
 " Change directory to the current buffer when opening files.
 set autochdir
 
 " change the mapleader from \ to ,
 let mapleader=","
 nmap <silent> <leader>h :silent :nohlsearch<CR>
+nmap <silent> <leader>n :silent :set number!<CR>
+" Shortcut to rapidly toggle `set list`
+nmap <leader>l :set list!<CR>
+
+" Show “invisible” characters
+set lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_
+
 " Quickly edit/reload the vimrc file
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
 nmap <silent> <leader>sv :so $MYVIMRC<CR>
@@ -204,7 +243,7 @@ if &term =~ '^xterm'
   " solid underscore
   let &t_SI .= "\<Esc>[4 q"
   " solid block
-  let &t_EI .= "\<Esc>[4 q"
+  let &t_EI .= "\<Esc>[6 q"
   " 1 or 0 -> blinking block
   " 3 -> blinking underscore
   " Recent versions of xterm (282 or above) also support
@@ -316,3 +355,34 @@ map . .j
 "let shellcmd = 'ssh '.g:netrw_machine.' -f -N -o ControlMaster=auto -o ControlPath=/tmp/%r@%h:%p'
 "let s:syntax =  'sh .vs'. g:netrw_machine 
 ""au FileType php au VimEnter * !exec s:syntax
+
+nnoremap <silent> j jzz:set showtabline=0<cr>
+nnoremap <silent> k kzz:set showtabline=0<cr>
+nnoremap G Gzz
+
+
+if has("multi_byte")
+  if &termencoding == ""
+    let &termencoding = &encoding
+  endif
+  set encoding=utf-8
+  setglobal fileencoding=utf-8
+  "setglobal bomb
+  set fileencodings=ucs-bom,utf-8,latin1
+endif
+
+
+""au FileType * au vimEnter * :let curdate=system('ssh motyar.info -f -N -o ControlMaster=auto -o ControlPath=/tmp/%r@%h:%p & echo $$')
+
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+
+
+if version >= 700
+    "set showtabline to show when more than one tab
+    set showtabline=1
+    "set tab labels to show at most 12 characters
+    set guitablabel=%-0.12t%M
+endif

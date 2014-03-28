@@ -42,6 +42,9 @@
 #define S_cyan          #2aa198
 #define S_green         #859900
 
+
+XTerm*locale: true
+
 XTerm*background:            S_base03
 XTerm*foreground:            S_base0
 XTerm*fading:                40
