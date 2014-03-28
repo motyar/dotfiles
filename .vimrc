@@ -206,9 +206,8 @@ map <Space> za
 
 "FireFox like tab shortcuts
 nnoremap <silent><A-Right> :set showtabline=1<cr>:tabnext<cr>
-"nnoremap <silent><A> :set showtabline=0
 nnoremap <silent><A-Left>  :set showtabline=1<cr>:tabprevious<CR>
-"nnoremap <C-W> :tabc<CR>
+nnoremap <C-W> :tabc<CR>
 nnoremap <C-T> :tabe<Space>
 
 " Toggle Vexplore with Ctrl-E
