@@ -210,7 +210,7 @@ nnoremap <silent><A-Left>  :set showtabline=1<cr>:tabprevious<CR>
 nnoremap <C-T> :tabe<Space>
 
 " Goto file under cursor in new tab
-map gt <c-w>gf
+map gf <c-w>gf
 
 " Toggle Vexplore with Ctrl-E
 function! ToggleVExplorer()
