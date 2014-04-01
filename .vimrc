@@ -207,8 +207,10 @@ map <Space> za
 "FireFox like tab shortcuts
 nnoremap <silent><A-Right> :set showtabline=1<cr>:tabnext<cr>
 nnoremap <silent><A-Left>  :set showtabline=1<cr>:tabprevious<CR>
-nnoremap <C-W> :tabc<CR>
 nnoremap <C-T> :tabe<Space>
+
+" Goto file under cursor in new tab
+map gt <c-w>gf
 
 " Toggle Vexplore with Ctrl-E
 function! ToggleVExplorer()
@@ -400,14 +402,3 @@ endif
 
 
 ""au FileType * au vimEnter * :let curdate=system('ssh motyar.info -f -N -o ControlMaster=auto -o ControlPath=/tmp/%r@%h:%p & echo $$')
-
-
-
-if version >= 700
-    "set showtabline to show when more than one tab
-    set showtabline=1
-    "set tab labels to show at most 12 characters
-    set guitablabel=%-0.12t%M
-endif
-
-"Auto remove trailing spaces

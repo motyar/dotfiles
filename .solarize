@@ -95,7 +95,7 @@ XTerm*color15:               S_base3
 
 ! my customisations
 XTerm*faceName: Liberation Mono
-XTerm*faceSize: 11
+XTerm*faceSize: 11   
 XTerm*VT100.translations: #override <Btn1Up>: select-end(PRIMARY, CLIPBOARD, CUT_BUFFER0)
 
 XTerm*metaSendsEscape: true
