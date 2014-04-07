@@ -1,5 +1,5 @@
-set shortmess+=atI "Startup message is irritating
 set nocompatible
+set shortmess+=atTI "Startup message is irritating
 set noeb
 set novb        " turn off visual bell
 set noerrorbells visualbell t_vb=
@@ -41,6 +41,10 @@ set foldlevel=99         "this is just what i use
 set wildmenu
 set wildmode=list:longest,full
 
+" When I close a tab, remove the buffer
+set nohidden
+
+
 set showmatch
 set matchtime=0
 
@@ -51,6 +55,11 @@ set virtualedit=block "Move freely in visual mode
 "Please never show status line
 set laststatus=0
 "set guitablabel=%N/\ %t\ %M
+
+
+" Open help in new tab
+cabbrev help tab help
+cabbrev h tab h
 
 
 
@@ -389,16 +398,14 @@ nnoremap <silent> j jzz:set showtabline=0<cr>
 nnoremap <silent> k kzz:set showtabline=0<cr>
 nnoremap G Gzz
 
+nore ; :
+nore , ;
 
-if has("multi_byte")
-  if &termencoding == ""
-    let &termencoding = &encoding
-  endif
-  set encoding=utf-8
-  setglobal fileencoding=utf-8
-  "setglobal bomb
-  set fileencodings=ucs-bom,utf-8,latin1
-endif
+"Shortcut for comment and uncomment this
+map cc I//<esc>
+map ucc I<right><right><bs><bs><esc>
 
+iab /** /**<cr>*<cr>*<cr>*<cr>*/<up><up>
 
-""au FileType * au vimEnter * :let curdate=system('ssh motyar.info -f -N -o ControlMaster=auto -o ControlPath=/tmp/%r@%h:%p & echo $$')
+" Because pkzip is not good enought 
+set cm=blowfish
