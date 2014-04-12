@@ -88,12 +88,6 @@ map <silent> 1 :set cmdheight=5<ESC>:w<CR>:set cmdheight=1<CR>
 " qq Quite please
 map qq :q<CR>:set showtabline=1<cr>
 
-" When I hit enter, I want new line and Insert mode
-map <CR> o
-
-" Whenever I hit , I try to delete that char and Insert Mode
-map <BS> bdwi
-
 " <|>: Reselect visual block after indent
 xnoremap < <gv
 xnoremap > >gv
@@ -103,10 +97,6 @@ xnoremap . :normal.<cr>
 
 " Backspace: Delete selected and go into insert mode
 xnoremap <bs> c
-
-" Save on  key jj
-imap jj <ESC>
-
 
 map <right> <nop>
 map <left> <nop>
