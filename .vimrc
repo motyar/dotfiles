@@ -208,13 +208,15 @@ nnoremap <silent><A-Right> :set showtabline=1<cr>:tabnext<cr>
 nnoremap <silent><A-Left>  :set showtabline=1<cr>:tabprevious<CR>
 nnoremap <C-T> :tabe<Space>
 
+
 " Goto file under cursor in new tab
 map gf <c-w>gf
 
 " Toggle Vexplore with Ctrl-E
 function! ToggleVExplorer()
     "Texplore
-    :tabfirst
+    ":tabfirst
+    :Tex
     let t:expl_buf_num = bufnr("%")
 endfunction
 map <silent> <C-E> :call ToggleVExplorer()<CR>
@@ -240,6 +242,9 @@ set lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_
 " Quickly edit/reload the vimrc file
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
 nmap <silent> <leader>sv :so $MYVIMRC<CR>
+
+" Please dont hand vim on Cntl+s
+map <C-S> <nop>
 
 if &term =~ "xterm\\|rxvt"
         " use an orange cursor in insert mode
