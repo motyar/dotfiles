@@ -215,6 +215,7 @@ map gf <c-w>gf
 
 " lets try this, if works well
 imap jj <esc>
+imap kk <esc>
 
 " Toggle Vexplore with Ctrl-E
 function! ToggleVExplorer()
