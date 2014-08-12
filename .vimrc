@@ -1,3 +1,6 @@
+execute pathogen#infect()
+syntax on
+filetype plugin indent on
 set nocompatible
 set shortmess+=atTI "Startup message is irritating
 set noeb
@@ -27,11 +30,10 @@ set ttimeout " do timeout on terminal key codes
 set timeoutlen=10 " timeout after 100 msec
 set cmdheight=1
 set showmatch
-"set pastetoggle=<Insert>
+set pastetoggle=<F3>
 set lazyredraw
 set scrolloff=17
-"set showcmd
-set noshowmode
+"set noshowmode
 " folding settings
 set foldmethod=indent   "fold based on indent
 set foldnestmax=10      "deepest fold is 10 levels
@@ -53,7 +55,7 @@ set noswapfile
 
 set virtualedit=block "Move freely in visual mode
 "Please never show status line
-set laststatus=0
+"set laststatus=0
 "set guitablabel=%N/\ %t\ %M
 
 
@@ -83,8 +85,9 @@ set backspace=indent,eol,start
 " No need to show mode
 "set noshowmode
 
-" Save on 1 in normal mode
-map <silent> 1 :set cmdheight=5<ESC>:w<CR>:set cmdheight=1<CR>
+" Save on hh in normal mode
+map <silent> hh <esc>:set cmdheight=5<ESC>:w<CR>:set cmdheight=1<CR>
+imap <silent> hh <esc>:set cmdheight=5<ESC>:w<CR>:set cmdheight=1<CR>
 " qq Quite please
 map qq :q<CR>:set showtabline=1<cr>
 
@@ -98,19 +101,22 @@ xnoremap . :normal.<cr>
 " Backspace: Delete selected and go into insert mode
 xnoremap <bs> c
 
+imap <up> <nop>
+imap <down> <nop>
+
 map <right> <nop>
 map <left> <nop>
 map <up> <nop>
 map <down> <nop>
 
-
-
-imap ( ()<left>
-imap () ()<left>
-imap [ []<left>
-imap [] []<left>
-imap < <><left>
-imap { {<cr><cr>}<up><tab>
+noremap h <NOP>
+noremap l <NOP>
+imap ( ()<esc>i
+imap () ()<esc>i
+imap [ []<esc>i
+imap [] []<esc>i
+imap < <><esc>i
+imap { {}<esc>i
 
 
 "Improve up/down movement on wrapped lines
@@ -158,12 +164,6 @@ set wmw=0
 nmap <c-h> <c-w>h<c-w><Bar>
 nmap <c-l> <c-w>l<c-w><Bar>
 
-
-"map <C-j> <C-W>j
-"map <C-k> <C-W>k
-"map <C-h> <C-W>h
-"map <C-l> <C-W>l
-
 "tabline styling
 hi TabLine      term=none cterm=none ctermbg=232 ctermfg=gray gui=reverse
 hi TabLineFill  term=none cterm=none ctermbg=232 gui=reverse
@@ -207,16 +207,20 @@ map <Space> za
 nnoremap <silent><A-Right> :set showtabline=1<cr>:tabnext<cr>
 nnoremap <silent><A-Left>  :set showtabline=1<cr>:tabprevious<CR>
 nnoremap <C-T> :tabe<Space>
+nnoremap <C-H> :%s///g<left><left><left>
 
 
 " Goto file under cursor in new tab
 map gf <c-w>gf
 
+" lets try this, if works well
+imap jj <esc>
+
 " Toggle Vexplore with Ctrl-E
 function! ToggleVExplorer()
     "Texplore
-    ":tabfirst
-    :Tex
+    :tabfirst
+    ":Tex
     let t:expl_buf_num = bufnr("%")
 endfunction
 map <silent> <C-E> :call ToggleVExplorer()<CR>
@@ -348,9 +352,9 @@ function! InsertStatuslineColor(mode)
       endif
 endfunction
 "This will toggel on <Inserr>
-au InsertChange * call InsertStatuslineColor(v:insertmode)
+""au InsertChange * call InsertStatuslineColor(v:insertmode)
 "Enter in nopaste
-au InsertEnter * set nopaste
+""au InsertEnter * set nopaste
 "}}}
 
 
@@ -367,7 +371,6 @@ endfunction
 au FileType netrw au VimEnter * call StartSshTunnel(g:netrw_machine)
 au FileType netrw au VimLeave * call StopSshTunnel()
 "}}}
-
 
 
 
@@ -419,3 +422,31 @@ let line = ' ' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{' . '{
 endfunction
 set foldtext=NeatFoldText()
 " }}}2
+
+"{{{ http://www.codeography.com/2013/06/19/navigating-vim-and-tmux-splits.html
+if exists('$TMUX')
+  function! TmuxOrSplitSwitch(wincmd, tmuxdir)
+    let previous_winnr = winnr()
+    silent! execute "wincmd " . a:wincmd
+    if previous_winnr == winnr()
+      call system("tmux select-pane -" . a:tmuxdir)
+      redraw!
+    endif
+  endfunction
+
+  let previous_title = substitute(system("tmux display-message -p '#{pane_title}'"), '\n', '', '')
+  let &t_ti = "\<Esc>]2;vim\<Esc>\\" . &t_ti
+  let &t_te = "\<Esc>]2;". previous_title . "\<Esc>\\" . &t_te
+
+  nnoremap <silent> <C-h> :call TmuxOrSplitSwitch('h', 'L')<cr>
+  nnoremap <silent> <C-j> :call TmuxOrSplitSwitch('j', 'D')<cr>
+  nnoremap <silent> <C-k> :call TmuxOrSplitSwitch('k', 'U')<cr>
+  nnoremap <silent> <C-l> :call TmuxOrSplitSwitch('l', 'R')<cr>
+else
+  map <C-h> <C-w>h
+  map <C-j> <C-w>j
+  map <C-k> <C-w>k
+  map <C-l> <C-w>l
+endif
+
+"}}}
