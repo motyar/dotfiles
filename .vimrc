@@ -1,5 +1,13 @@
-execute pathogen#infect()
-syntax on
+" execute pathogen#infect()
+syntax enable
+" set termguicolors
+set background=dark
+let g:solarized_termcolors=16
+if !has('gui_running')
+    let g:solarized_termtrans=1
+endif
+colorscheme solarized
+
 filetype plugin indent on
 set nocompatible
 set shortmess+=atTI "Startup message is irritating
@@ -55,8 +63,13 @@ set noswapfile
 
 set virtualedit=block "Move freely in visual mode
 "Please never show status line
-"set laststatus=0
-"set guitablabel=%N/\ %t\ %M
+ set laststatus=1
+" set guitablabel=%N/\ %t\ %M
+
+" get infinite undo https://news.ycombinator.com/item?id=18901621 
+" Be sure to mkdir ~/.vim/undodir
+set undofile
+set undodir=~/.vim/undodir
 
 
 " Open help in new tab
@@ -84,6 +97,9 @@ set backspace=indent,eol,start
 
 " No need to show mode
 "set noshowmode
+
+" Set paste on nn
+map <silent> nn <esc>:set paste<ESC>i
 
 " Save on hh in normal mode
 map <silent> hh <esc>:set cmdheight=5<ESC>:w<CR>:set cmdheight=1<CR>
@@ -242,7 +258,9 @@ nmap <silent> <leader>n :silent :set number!<CR>
 nmap <leader>l :set list!<CR>
 
 " Show “invisible” characters
-set lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_
+set ts=4 sw=4
+set lcs=tab:\|\ ,trail:·,eol:¬,nbsp:_
+hi SpecialKey ctermfg=232
 
 " Quickly edit/reload the vimrc file
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
@@ -353,24 +371,26 @@ function! InsertStatuslineColor(mode)
       endif
 endfunction
 "This will toggel on <Inserr>
-""au InsertChange * call InsertStatuslineColor(v:insertmode)
+"au InsertChange * call InsertStatuslineColor(v:insertmode)
 "Enter in nopaste
-""au InsertEnter * set nopaste
+"au InsertEnter * set nopaste
 "}}}
 
+set showmode
+au InsertLeave * set nopaste
 
 "{{{ Start and stop ssh tunnel, Fast remote editing via http://www.erikzaadi.com/2013/03/07/fast-remote-editing-with-vim/
-function! StartSshTunnel(machine)
-    let shellcmd = "ssh ".a:machine." -f -N -o ControlMaster=auto -o ControlPath=/tmp/%r@%h:%p"
-    let tunnel=system(shellcmd)
-endfunction
-
-function! StopSshTunnel()
-   let kill = system("lsof -i -n | grep ssh | awk '{print $2}' | xargs kill -9")
-endfunction
-
-au FileType netrw au VimEnter * call StartSshTunnel(g:netrw_machine)
-au FileType netrw au VimLeave * call StopSshTunnel()
+"function! StartSshTunnel(machine)
+    "let shellcmd = "ssh ".a:machine." -f -N -o ControlMaster=auto -o ControlPath=/tmp/%r@%h:%p"
+    "let tunnel=system(shellcmd)
+"endfunction
+"
+"function! StopSshTunnel()
+   "let kill = system("lsof -i -n | grep ssh | awk '{print $2}' | xargs kill -9")
+"endfunction
+"
+"au FileType netrw au VimEnter * call StartSshTunnel(g:netrw_machine)
+"au FileType netrw au VimLeave * call StopSshTunnel()
 "}}}
 
 
@@ -393,8 +413,6 @@ map . .j
 ""au FileType php au VimEnter * !exec s:syntax
 
 
-nnoremap <silent> j jzz:set showtabline=0<cr>
-nnoremap <silent> k kzz:set showtabline=0<cr>
 nnoremap G Gzz
 
 nore ; :
@@ -451,3 +469,51 @@ else
 endif
 
 "}}}
+
+let g:lightline = {
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'gitbranch#name'
+      \ },
+      \ }
+
+" Specify a directory for plugins
+" - For Neovim: ~/.local/share/nvim/plugged
+" - Avoid using standard Vim directory names like 'plugin'
+
+set updatetime=250
+
+call plug#begin()
+Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
+" Plug 'itchyny/lightline.vim'
+" Plug 'itchyny/vim-gitbranch'
+Plug 'airblade/vim-gitgutter'
+Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'mattn/emmet-vim'
+Plug 'tpope/vim-surround'
+Plug 'easymotion/vim-easymotion'
+call plug#end()
+
+
+set autowrite
+
+map <C-m> :cnext<CR>
+nnoremap <leader>a :cclose<CR>
+
+autocmd FileType go nmap <leader>b  <Plug>(go-build)
+autocmd FileType go nmap <leader>r  <Plug>(go-run)
+autocmd FileType go nmap <leader>t  <Plug>(go-test)
+
+let g:go_test_timeout = '10s'
+let g:go_fmt_command = "goimports"
+
+autocmd BufWritePre *.go call go#lint#Run()
+
+let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
+let g:go_metalinter_autosave = 1
+let g:go_metalinter_autosave_enabled = ['vet', 'golint']
+let g:syntastic_go_checkers = ['go', 'golint', 'errcheck']
